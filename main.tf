@@ -92,16 +92,16 @@ resource "aws_instance" "lakshay_instance" {
     Name = "terraform-server-2"
   }
   
-  provisioner "local-exec" {
-    command = templatefile("${var.host_os}-ssh-config.tpl", {
-      hostname     = self.public_ip,
-      user         = "ubuntu",
-      identityfile = "~/.ssh/lakshaykey"
-    })
-    interpreter = [
-      "Powershell",
-      "-Command"
-    ]
-  }
+ # provisioner "local-exec" {
+   # command = templatefile("${var.host_os}-ssh-config.tpl", {
+    #  hostname     = self.public_ip,
+    #  user         = "ubuntu",
+     # identityfile = "~/.ssh/lakshaykey"
+   # })
+   # interpreter = [
+    #  "Powershell",
+     # "-Command"
+   # ]
+ # }
 
 }
