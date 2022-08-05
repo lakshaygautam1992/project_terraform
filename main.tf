@@ -75,11 +75,6 @@ resource "aws_security_group" "lakshay_sg" {
   }
 }
 
-resource "aws_key_pair" "lakshaykey" {
-  key_name   = "terraform_key"
-  public_key = file("~/.ssh/lakshaykey.pub")
-}
-
 #To launch ec2 instance
 resource "aws_instance" "lakshay_instance" {
   instance_type          = "t2.micro"
