@@ -74,10 +74,10 @@ resource "aws_security_group" "lakshay_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-resource "aws_key_pair" "lakshay_key" {
-  key_name = "rakesh_key"
-  public_key = var.test
-  public_key = "{file("test_key.pub")}"
+#resource "aws_key_pair" "lakshay_key" {
+#  key_name = "rakesh_key"
+#  public_key = var.test
+#  public_key = "{file("test_key.pub")}"
  
 }
 
@@ -85,7 +85,7 @@ resource "aws_key_pair" "lakshay_key" {
 resource "aws_instance" "lakshay_instance" {
   instance_type          = "t2.micro"
   ami                    = data.aws_ami.server_ami.id
-  key_name               = "rakesh_key"
+#  key_name               = "rakesh_key"
   vpc_security_group_ids = [aws_security_group.lakshay_sg.id]
   subnet_id              = aws_subnet.lakshay_public_subnet.id
   user_data              = file("userdata.tpl")
