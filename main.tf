@@ -74,18 +74,16 @@ resource "aws_security_group" "lakshay_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-resource "aws_key_pair" "lakshay_key" {
-  key_name = "rakesh_key"
-#  public_key = var.test
-#  public_key = "{file("test_key.pub")}"
- 
+resource "aws_key_pair" "lakshaykey" {
+  key_name   = "terraform_key"
+  public_key = file("~/.ssh/lakshaykey.pub")
 }
 
 #To launch ec2 instance
 resource "aws_instance" "lakshay_instance" {
   instance_type          = "t2.micro"
   ami                    = data.aws_ami.server_ami.id
-  aws_key_pair               = aws_key_pair.lakshay_key.id
+  key_name               = aws_key_pair.lakshaykey.id
   vpc_security_group_ids = [aws_security_group.lakshay_sg.id]
   subnet_id              = aws_subnet.lakshay_public_subnet.id
   user_data              = file("userdata.tpl")
@@ -95,19 +93,19 @@ resource "aws_instance" "lakshay_instance" {
   }
 
   tags = {
-    Name = "terraform-server-4"
+    Name = "terraform-server-2"
   }
   
- # provisioner "local-exec" {
-   # command = templatefile("${var.host_os}-ssh-config.tpl", {
-    #  hostname     = self.public_ip,
-    #  user         = "ubuntu",
-     # identityfile = "~/.ssh/lakshaykey"
-   # })
-   # interpreter = [
-    #  "Powershell",
-     # "-Command"
-   # ]
- # }
+  provisioner "local-exec" {
+    command = templatefile("${var.host_os}-ssh-config.tpl", {
+      hostname     = self.public_ip,
+      user         = "ubuntu",
+      identityfile = "~/.ssh/lakshaykey"
+    })
+    interpreter = [
+      "Powershell",
+      "-Command"
+    ]
+  }
 
 }
